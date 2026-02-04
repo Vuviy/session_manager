@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  php:
+    build: './docker/php'
+    volumes:
+      - './app:/var/www/html'
+  nginx:
+    image: nginx:1.27.2
+    ports:
+      - 80:80
+    volumes:
+      - './app:/var/www/html'
+      - './docker/nginx/conf.d:/etc/nginx/conf.d'
+  db_qb:
+      image: mysql:8.4
+      environment:
+        MYSQL_DATABASE: ${DB_DATABASE}
+        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      volumes:
+        - mysql_data:/var/lib/mysql
+      container_name: db_qb
+
+  phpmyadmin:
+    image: phpmyadmin:5.2.1
+    ports:
+      - 8000:80
+    environment:
+      PMA_HOST: db_qb
+      PMA_USER: root
+      PMA_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    depends_on:
+      - db_qb
+
+volumes:
+  mysql_data:
