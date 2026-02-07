@@ -12,8 +12,8 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => 'db_qb',
-            'dbname' => 'qb',
+            'host' => 'db_ses',
+            'dbname' => 'db_ses',
             'user' => 'root',
             'password' => 'root',
         ],

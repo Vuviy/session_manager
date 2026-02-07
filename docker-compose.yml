@@ -12,25 +12,25 @@ services:
     volumes:
       - './app:/var/www/html'
       - './docker/nginx/conf.d:/etc/nginx/conf.d'
-  db_qb:
+  db_ses:
       image: mysql:8.4
       environment:
         MYSQL_DATABASE: ${DB_DATABASE}
         MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       volumes:
         - mysql_data:/var/lib/mysql
-      container_name: db_qb
+      container_name: db_ses
 
   phpmyadmin:
     image: phpmyadmin:5.2.1
     ports:
       - 8000:80
     environment:
-      PMA_HOST: db_qb
+      PMA_HOST: db_ses
       PMA_USER: root
       PMA_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     depends_on:
-      - db_qb
+      - db_ses
 
 volumes:
   mysql_data:

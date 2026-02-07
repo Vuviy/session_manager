@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Database;
 
 use Exception;
 
