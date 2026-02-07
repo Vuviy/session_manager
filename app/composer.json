@@ -1,6 +1,6 @@
 {
-  "name": "vuviy/query_builder",
-  "description": "query_builder",
+  "name": "vuviy/session_manager",
+  "description": "session_manager",
 
 
   "require": {
@@ -21,3 +21,4 @@
     "squizlabs/php_codesniffer": "^4.0"
   }
 }
+
