@@ -12,18 +12,18 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => 'db_ses',
-            'dbname' => 'db_ses',
-            'user' => 'root',
-            'password' => 'root',
+            'host' => getenv('DB_HOST'),
+            'dbname' => getenv('DB_NAME'),
+            'user' => getenv('USER'),
+            'password' => getenv('PASSWORD'),
         ],
 
         'pgsql' => [
             'driver' => 'pgsql',
-            'host' => 'pgsql',
-            'dbname' => 'app',
-            'user' => 'app',
-            'password' => 'secret',
+            'host' => getenv('DB_HOST'),
+            'dbname' => getenv('DB_NAME'),
+            'user' => getenv('USER'),
+            'password' => getenv('PASSWORD'),
         ],
     ],
 ];
