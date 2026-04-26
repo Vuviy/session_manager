@@ -2,6 +2,7 @@ version: '3'
 
 services:
   php:
+    container_name: ses_php
     build: './docker/php'
     volumes:
       - './app:/var/www/html'

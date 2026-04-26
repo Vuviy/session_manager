@@ -2,12 +2,17 @@
 
 declare(strict_types=1);
 
+use App\Controller\AuthController;
+use App\Controller\Controller;
+
 
 require __DIR__ . '/vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createUnsafeImmutable(__DIR__);
+$dotenv->load();
+
 require __DIR__ . '/functions/functions.php';
-
-
-//dd($_SERVER);
+require __DIR__ . '/bootstrap.php';
 
 
 if ($_SERVER['REQUEST_URI'] === '/favicon.ico') {
@@ -15,13 +20,13 @@ if ($_SERVER['REQUEST_URI'] === '/favicon.ico') {
 }
 
 if ($_SERVER['REQUEST_URI'] === '/') {
-    $cont = new \App\Controller\Controller();
+    $cont = new Controller($session);
 
-    $cont->test();
+    $cont->home();
 }
 
 if ($_SERVER['REQUEST_URI'] === '/login') {
-    $cont = new \App\Controller\AuthController();
+    $cont = new AuthController($session);
 
     $cont->login();
 }

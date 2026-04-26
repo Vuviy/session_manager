@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App;
 
 use App\DTO\Session;
@@ -35,8 +37,8 @@ final class SessionManager
                     return;
                 }
 
-                if (is_string($session->data) && $session->data !== '') {
-                    $session->data = $this->crypto->decrypt($session->data);
+                if (is_string($session->rawData) && $session->rawData !== '') {
+                    $session->data = $this->crypto->decrypt($session->rawData);
                 } else {
                     $session->data = [];
                 }
@@ -129,15 +131,14 @@ final class SessionManager
 
         $encrypted = $this->crypto->encrypt($this->session->data);
 
-        $this->repository->update(
-            $this->session,
-            $encrypted
-        );
+        $this->repository->update($this->session, $encrypted);
     }
+
 
     public function save(): void
     {
-        $this->repository->update($this->session);
+        $encrypted = $this->crypto->encrypt($this->session->data);
+        $this->repository->update($this->session, $encrypted);
     }
 
     public function destroy(): void
@@ -166,14 +167,24 @@ final class SessionManager
 
     public function login(int $userId): void
     {
-
         $this->regenerate();
 
         $this->session->userId = $userId;
 
+        $encrypted = $this->crypto->encrypt($this->session->data);
 
-        $this->repository->update($this->session);
+        $this->repository->update($this->session, $encrypted);
 
         $this->enforceSessionLimits($userId);
+    }
+
+    public function getStatusOfSession(): bool
+    {
+        return $this->session->isActive;
+    }
+
+    public function getLastActivityOfSession(): string
+    {
+        return $this->session->lastActivity->format('Y-m-d H:i:s');
     }
 }

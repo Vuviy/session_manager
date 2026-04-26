@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App;
 
 use RuntimeException;
@@ -54,6 +56,11 @@ final class SessionCrypto
             $iv
         );
 
-        return unserialize($decrypted);
+        $result = unserialize($decrypted, ['allowed_classes' => false]);
+        if ($result === false) {
+            throw new RuntimeException('Failed to decrypt session data');
+        }
+
+        return $result;
     }
 }

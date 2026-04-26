@@ -7,5 +7,11 @@ function config()
 
 function cypherKey()
 {
-    return 'base64:T9pE+XJcTbQ4uRk1cLzXhN8HjGv4eL7FqF8r5yYHk1E=';
+    $key = getenv('CIPHER_KEY');
+
+    if (!$key) {
+        throw new \RuntimeException('CIPHER_KEY is not set in environment');
+    }
+
+    return $key;
 }

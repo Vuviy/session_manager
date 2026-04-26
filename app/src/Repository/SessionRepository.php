@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Database\Database;
@@ -28,7 +30,8 @@ final class SessionRepository
             id: (int)$row['id'],
             sessionId: $row['session_id'],
             userId: $row['user_id'] ? (int)$row['user_id'] : null,
-            data: json_decode($row['data']),
+            data: [],
+            rawData: $row['data'],
             fingerprint: $row['fingerprint'],
             createdAt: new DateTimeImmutable($row['created_at']),
             lastActivity: new DateTimeImmutable($row['last_activity']),
@@ -49,18 +52,20 @@ final class SessionRepository
         ]);
     }
 
-    public function update(Session $session, $encryptedData = []): void
+    public function update(Session $session, string $data): void
     {
         $this->db->table('sessions')
             ->where('session_id', '=', $session->sessionId)
             ->update([
                 'user_id' => $session->userId,
-                'data' => empty($encryptedData) ? json_encode($session->data) : $encryptedData,
+                'data' => $data,
                 'fingerprint' => $session->fingerprint,
                 'last_activity' => $session->lastActivity->format('Y-m-d H:i:s'),
                 'is_active' => (int)$session->isActive,
             ]);
     }
+
+
 
     public function deactivate(Session $session): void
     {

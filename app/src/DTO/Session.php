@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DTO;
 
 final class Session
@@ -12,7 +14,8 @@ final class Session
         public string $fingerprint,
         public \DateTimeImmutable $createdAt,
         public \DateTimeImmutable $lastActivity,
-        public bool $isActive = true
+        public bool $isActive = true,
+        public string $rawData = '',
     ) {
     }
 }

@@ -1,25 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
-use App\Database\Database;
-use App\DTO\Session;
-use App\Repository\SessionRepository;
-use App\SessionCrypto;
-use App\SessionFingerprint;
 use App\SessionManager;
-use DateTime;
 
 final class Controller
 {
-    public function test()
+
+    public function __construct(private SessionManager $session) {}
+
+    public function home()
     {
+        $visits = $this->session->get('visits', 0);
+        $this->session->set('visits', $visits + 1);
 
-        $crypto = new SessionCrypto(cypherKey());
-        $repo = new SessionRepository(new Database(config()));
-        $fingerprint = new SessionFingerprint();
-        $session = new SessionManager($repo, $fingerprint, $crypto);
+        echo json_encode([
+            'visits' => $visits + 1,
+            'session_active' => $this->session->getStatusOfSession(),
+            'last_active' => $this->session->getLastActivityOfSession(),
+        ]);
 
-        echo 'home';
     }
 }
