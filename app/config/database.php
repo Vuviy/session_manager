@@ -14,7 +14,7 @@ return [
             'driver' => 'mysql',
             'host' => getenv('DB_HOST'),
             'dbname' => getenv('DB_NAME'),
-            'user' => getenv('USER'),
+            'user' => getenv('USER_NAME'),
             'password' => getenv('PASSWORD'),
         ],
 
@@ -22,7 +22,7 @@ return [
             'driver' => 'pgsql',
             'host' => getenv('DB_HOST'),
             'dbname' => getenv('DB_NAME'),
-            'user' => getenv('USER'),
+            'user' => getenv('USER_NAME'),
             'password' => getenv('PASSWORD'),
         ],
     ],

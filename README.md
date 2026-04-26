@@ -79,7 +79,7 @@ MYSQL_ROOT_PASSWORD=root
 ```env
 DB_HOST=db_ses
 DB_NAME=db_ses
-USER=root
+USER_NAME=root
 PASSWORD=root
 CIPHER_KEY=your-32-character-secret-key-here //base64:T9pE+XJcTbQ4uRk1cLzXhN8HjGv4eL7FqF8r5yYHk1E=
 ```
